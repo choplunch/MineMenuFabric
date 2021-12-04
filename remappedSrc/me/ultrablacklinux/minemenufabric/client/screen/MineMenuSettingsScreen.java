@@ -388,8 +388,8 @@ public class MineMenuSettingsScreen extends Screen {
             }
             else client.getItemRenderer().renderInGui(i, this.width / 2 - 120, 82);
         }
-        itemType.renderTooltip(matrices, mouseX, mouseY);
-        itemType.renderTooltip(matrices, mouseX, mouseY);
+        itemType.renderToolTip(matrices, mouseX, mouseY);
+        itemType.renderToolTip(matrices, mouseX, mouseY);
         super.render(matrices, mouseX, mouseY, delta);
     }
 
@@ -416,10 +416,10 @@ public class MineMenuSettingsScreen extends Screen {
             }
             isRepeatEdit = false;
 
-            client.setScreenAndRender(new MineMenuSelectScreen(MineMenuFabricClient.minemenuData,
+            client.openScreen(new MineMenuSelectScreen(MineMenuFabricClient.minemenuData,
                     new TranslatableText("minemenu.default.title").getString(), null));
         }
-        else this.client.setScreenAndRender(this.parent);
+        else this.client.openScreen(this.parent);
 
     }
 

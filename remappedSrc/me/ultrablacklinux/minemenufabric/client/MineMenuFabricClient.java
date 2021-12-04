@@ -72,10 +72,10 @@ public class MineMenuFabricClient implements ClientModInitializer {
                     //noinspection ConstantConditions
                     minemenuData = GsonUtil.fixEntryAmount(minemenuData);
                     try {
-                        client.setScreenAndRender(new MineMenuSelectScreen(minemenuData,
+                        client.openScreen(new MineMenuSelectScreen(minemenuData,
                                 new TranslatableText("minemenu.default.title").getString(), null));
                     } catch (Exception e) {
-                        client.setScreenAndRender(null);
+                        client.openScreen(null);
                         assert client.player != null;
                         client.player.sendMessage(new TranslatableText("minemenu.error.config"), false);
                     }

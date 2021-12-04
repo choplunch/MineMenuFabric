@@ -79,7 +79,7 @@ public class MineMenuSelectScreen extends Screen {
 
         this.addDrawableChild(new ButtonWidget(this.width - 90 , this.height  - 35, 75, 20,
                 new TranslatableText("minemenu.gui.config"), (buttonWidget) -> {
-            client.setScreenAndRender(AutoConfig.getConfigScreen(Config.class, this).get());
+            client.openScreen(AutoConfig.getConfigScreen(Config.class, this).get());
         }));
     }
 
@@ -183,7 +183,7 @@ public class MineMenuSelectScreen extends Screen {
             if (button == 1 && repeatDatapath != null) {
                 isRepeatEdit = true;
                 try {
-                    client.setScreenAndRender(new MineMenuSettingsScreen(this, true));
+                    client.openScreen(new MineMenuSettingsScreen(this, true));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -219,7 +219,7 @@ public class MineMenuSelectScreen extends Screen {
             }
         }
         else {
-            this.client.setScreenAndRender(null);
+            this.client.openScreen(null);
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }
@@ -247,7 +247,7 @@ public class MineMenuSelectScreen extends Screen {
         innerRingRadius *= animationStage /100d;
         outerRingRadius *= animationStage /100d;
 
-        Matrix4f modelMatrix = matrixStack.peek().getPositionMatrix();
+        Matrix4f modelMatrix = matrixStack.peek().getModel();
         bufferBuilder.begin(VertexFormat.DrawMode.TRIANGLE_FAN, VertexFormats.POSITION_COLOR);
         for (int i = startingAngle; i <= endingAngle; i++) {
             double x = Math.sin(Math.toRadians(i)) * innerRingRadius;
@@ -284,7 +284,7 @@ public class MineMenuSelectScreen extends Screen {
                 datapath.add("data");
                 GsonUtil.saveJson(GsonUtil.fixEntryAmount(value.get("data").getAsJsonObject()));
 
-                client.setScreenAndRender(new MineMenuSelectScreen(value.get("data").getAsJsonObject(),
+                client.openScreen(new MineMenuSelectScreen(value.get("data").getAsJsonObject(),
                         value.get("name").getAsString(), this));
                 break;
 
@@ -311,7 +311,7 @@ public class MineMenuSelectScreen extends Screen {
 
             case "chatbox":
                 close();
-                client.setScreenAndRender(new ChatScreen(value.get("data").getAsString()));
+                client.openScreen(new ChatScreen(value.get("data").getAsString()));
                 break;
 
             case "clipboard":
@@ -396,7 +396,7 @@ public class MineMenuSelectScreen extends Screen {
     }
 
     private static void close() {
-        MinecraftClient.getInstance().setScreenAndRender(null);
+        MinecraftClient.getInstance().openScreen(null);
         datapath = new ArrayList<>();
     }
 }

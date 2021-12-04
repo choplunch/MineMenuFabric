@@ -40,7 +40,7 @@ public class RandomUtil {
         ItemStack out;
         try {
             out = itemStackFromString(iconItem);
-            NbtCompound customModelTag = out.getOrCreateNbt();
+            NbtCompound customModelTag = out.getOrCreateTag();
             customModelTag.putInt("CustomModelData", customModelData);
             try {
                 if (enchanted) {
@@ -52,7 +52,7 @@ public class RandomUtil {
                 if (!skullowner.isEmpty() && isSkullItem(out)) {
                     ItemStack finalOut = out;
                     Thread nbTater = new Thread(() -> {
-                        NbtCompound skullTag = finalOut.getOrCreateNbt();
+                        NbtCompound skullTag = finalOut.getOrCreateTag();
                         gameProfile = new GameProfile(null, skullowner);
                         SkullBlockEntity.loadProperties(gameProfile, RandomUtil::setGameProfile);
                         skullTag.put("SkullOwner", NbtHelper.writeGameProfile(new NbtCompound(), gameProfile));
@@ -61,7 +61,7 @@ public class RandomUtil {
                     nbTater.start();
                     out = null;
 
-                } else out.removeSubNbt("SkullOwner");
+                } else out.removeSubTag("SkullOwner");
 
             } catch (Exception e) {e.printStackTrace();}
         } catch (InvalidIdentifierException e) {
@@ -83,10 +83,10 @@ public class RandomUtil {
     public static void openConfigScreen(Screen parent) {
         MinecraftClient client = MinecraftClient.getInstance();
         try {
-            client.setScreenAndRender(new MineMenuSettingsScreen(parent, false));
+            client.openScreen(new MineMenuSettingsScreen(parent, false));
         } catch (NullPointerException e) {
             e.printStackTrace();
-            client.setScreenAndRender(null);
+            client.openScreen(null);
             assert client.player != null;
             client.player.sendMessage(new TranslatableText("minemenu.error.config"), false);
         }
