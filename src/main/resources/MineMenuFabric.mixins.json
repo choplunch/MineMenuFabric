@@ -2,11 +2,9 @@
   "required": true,
   "minVersion": "0.8",
   "package": "me.ultrablacklinux.minemenufabric.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
     "KeyBindingMixin"
-  ],
-  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
